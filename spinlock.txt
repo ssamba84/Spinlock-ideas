@@ -12,8 +12,9 @@ init(){
    the check at 4 will ensure no other thread holds the lock at the same time
    line 6 is essentially backing off of the attempt to lock
 
-   the sleep for rand() at 7 is for the scenario wherein 2 processors are executing the same lines of code   in lock() at the same time, imagine, without this sleep, the 2 processors will keep executing 
-   the same piece of code
+   the sleep for rand() at 7 is for the scenario wherein 2 processors are executing the 
+   same lines of code   in lock() at the same time, imagine, without this sleep, the 2 
+   processors will keep executing the same piece of code
 */
 
 1  lock(){
