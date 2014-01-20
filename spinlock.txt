@@ -1,0 +1,37 @@
+This is just a write up and not actual code.  I have put this out just to put down my thoughts.  I hope
+to code this using c++11's std::atomic libraries once I understand them enough.
+
+init(){
+   lck <- 0
+}
+
+/*
+   assuming each line executes atomically and in the same order as listed in the program
+   
+   line 3 is the request to acquire lock for the thread.
+   the check at 4 will ensure no other thread holds the lock at the same time
+   line 6 is essentially backing off of the attempt to lock
+
+   the sleep for rand() at 7 is for the scenario wherein 2 processors are executing the same lines of code   in lock() at the same time, imagine, without this sleep, the 2 processors will keep executing 
+   the same piece of code
+*/
+
+1  lock(){
+2    while(true){
+3       lck <- lck + 1
+4       if (lck == 1)
+5          return
+
+6       lck <- lck - 1
+7       sleep(rand())
+8    }
+9 }
+
+
+unlock(){
+   lck <- lck - 1
+}
+
+The code above should work for multiple threads with just a single lock variable.  But ofcourse the 
+language should have reliable ways to preserve ordering and atomicity of operations without which the
+memory model will prevent the code from working right.
